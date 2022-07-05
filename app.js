@@ -42,19 +42,20 @@ app.post("/", function (req, res) {
   // Convert subscriber info to a string
   const jsonData = JSON.stringify(data);
 
-  // MailChimp listId = "a8bd2750da";
-  const url = "https://us9.api.mailchimp.com/3.0/lists/a8bd2750da";
+  // MailChimp listId = "4e835fb9b5";
+  const url = "https://us8.api.mailchimp.com/3.0/lists/4e835fb9b5";
 
   const options = {
     /* Javascript Object */ method: "POST",
-    auth: "Ayren Lytle:95a8b96ddb204963391ec2d3186f4688-us9",
+    auth: "Ayren Lytle:a4fbeaa81d92735e0ff77fbf24c873f7-us8",
   };
 
   const request = https.request(url, options, function (response) {
     if (response.statusCode === 200) {
       res.sendFile(__dirname + "/success.html");
     } else {
-      reset.sendFile(__dirname + "/failure.html");
+      console.log(response.statusCode);
+      res.sendFile(__dirname + "/failure.html");
     }
 
     response.on("data", function (data) {
@@ -62,7 +63,7 @@ app.post("/", function (req, res) {
     });
   });
 
-  request.write(jsonData); /* Sending dat to Mailchimp */
+  request.write(jsonData); /* Sending data to Mailchimp */
   request.end(); /* Ending communication with mailchimp */
 });
 

@@ -1,5 +1,5 @@
 {
-  "name": "newsletterv2",
+  "name": "newsletter",
   "version": "1.1.0",
   "description": "A node.js app which processes a newsletter signup form and posts the subscriber data to a Mailchimp marketing list using their API",
   "main": "app.js",
@@ -9,11 +9,11 @@
   "author": "Ayren Lytle",
   "license": "ISC",
   "dependencies": {
+    "@mailchimp/mailchimp_marketing": "^3.0.75",
     "body-parser": "^1.20.0",
-    "expres": "^0.0.5",
+    "express": "^4.18.1",
     "https": "^1.0.0",
-    "node.js": "^0.0.1-security",
-    "nodemon": "^1.3.3",
-    "request": "^2.88.2"
+    "node": "^16.15.1",
+    "nodemon": "^1.3.3"
   }
 }

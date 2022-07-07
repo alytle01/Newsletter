@@ -1,8 +1,11 @@
 //jshint esversion:6
+
+// Allow for environment variables to be placed in the .env file
+require("dotenv").config();
+// use https instead of request = require("request");
 const https = require("https");
 const express = require("express");
 const bodyParser = require("body-parser");
-// use https instead of request = require("request");
 const mailchimp = require("@mailchimp/mailchimp_marketing");
 const { reset } = require("nodemon");
 
@@ -24,7 +27,7 @@ app.post("/", function (req, res) {
   const lastName = req.body.lName;
   const email = req.body.email;
 
-  // Subscriber info from form to post to MailChimp API as a JavaScript object.
+  // Subscriber info from signup form to be posted to MailChimp API as a JavaScript object.
   const data = {
     members: [
       /* array of key value pairs (member data) */
@@ -39,15 +42,15 @@ app.post("/", function (req, res) {
     ],
   };
 
-  // Convert subscriber info to a string
+  // Convert subscriber info object to a string
   const jsonData = JSON.stringify(data);
 
-  // MailChimp listId = "4e835fb9b5";
-  const url = "https://us8.api.mailchimp.com/3.0/lists/4e835fb9b5";
+  const url = process.env.MAILCHIMP_URL;
+  console.log(url);
 
   const options = {
     /* Javascript Object */ method: "POST",
-    auth: "Ayren Lytle:a4fbeaa81d92735e0ff77fbf24c873f7-us8",
+    auth: process.env.API_KEY,
   };
 
   const request = https.request(url, options, function (response) {
@@ -72,6 +75,7 @@ app.post("/failure", function (req, res) {
   res.redirect("/");
 });
 
+// Allows Heroku dynamic port to be used or the local port 3000
 app.listen(process.env.PORT || 3000, function () {
   console.log("Server listening on port 3000");
 });
